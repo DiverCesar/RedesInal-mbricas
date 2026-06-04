@@ -366,7 +366,7 @@ function buildBSSColoring() {
             style: `animation: pulse-wave 5s infinite linear; pointer-events: none;`
         }));
         
-        g.appendChild(createSVG('use', {href: '#icon-router', x: c.x, y: c.y, transform: `scale(0.8) translate(${-c.x*0.2}, ${-c.y*0.2})`, style: 'pointer-events: none;'}));
+        g.appendChild(createSVG('use', {href: '#icon-router', x: c.x, y: c.y, style: 'pointer-events: none;'}));
         
         let textNode = createSVG('text', {x: c.x, y: c.y - 20, class: 'svg-tech-label', style: 'pointer-events: none;'});
         textNode.appendChild(document.createTextNode(c.id));
