@@ -1,301 +1,327 @@
 /* ==========================================================================
    VARIABLES GLOBALES Y TEMA
    ========================================================================== */
-   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
 
-   :root {
-       /* Paleta de colores principal (Cyber-Tech Dark) */
-       --bg-deep: #050b14;
-       --bg-panel: rgba(13, 22, 38, 0.65);
-       
-       /* Acentos Wi-Fi */
-       --cyan-glow: #00f0ff;
-       --cyan-dim: rgba(0, 240, 255, 0.2);
-       --gold-ax: #ffd700;
-       --gold-dim: rgba(255, 215, 0, 0.15);
-       
-       /* Tipografía */
-       --text-main: #f8fafc;
-       --text-muted: #94a3b8;
-       --text-tech: #38bdf8;
-       
-       /* Efectos Cristal */
-       --glass-border: rgba(56, 189, 248, 0.15);
-       --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-       
-       /* Transiciones */
-       --transition-slow: 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-       --transition-fast: 0.3s ease;
-   }
-   
-   /* ==========================================================================
-      RESETEO Y BASE
-      ========================================================================== */
-   * {
-       box-sizing: border-box;
-       margin: 0;
-       padding: 0;
-   }
-   
-   body {
-       background-color: var(--bg-deep);
-       background-image: 
-           radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.04), transparent 50%),
-           radial-gradient(circle at 85% 30%, rgba(255, 215, 0, 0.03), transparent 50%);
-       color: var(--text-main);
-       font-family: 'Inter', sans-serif;
-       overflow: hidden; /* Previene scroll vertical, la navegación es por slides */
-       width: 100vw;
-       height: 100vh;
-   }
-   
-   /* ==========================================================================
-      SISTEMA DE SLIDES (DIAPOSITIVAS)
-      ========================================================================== */
-   #presentation-container {
-       position: relative;
-       width: 100%;
-       height: 100%;
-   }
-   
-   .slide {
-       position: absolute;
-       top: 0;
-       left: 0;
-       width: 100%;
-       height: 100%;
-       opacity: 0;
-       visibility: hidden;
-       transform: scale(0.95) translateY(20px);
-       transition: opacity var(--transition-slow), transform var(--transition-slow), visibility var(--transition-slow);
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       padding: 2rem;
-       z-index: 1;
-   }
-   
-   .slide.active {
-       opacity: 1;
-       visibility: visible;
-       transform: scale(1) translateY(0);
-       z-index: 10;
-   }
-   
-   /* ==========================================================================
-      COMPONENTES ESTRUCTURALES (GLASSMORPHISM)
-      ========================================================================== */
-   .glass-panel {
-       background: var(--bg-panel);
-       backdrop-filter: blur(16px);
-       -webkit-backdrop-filter: blur(16px);
-       border: 1px solid var(--glass-border);
-       border-radius: 24px;
-       padding: 3.5rem;
-       box-shadow: var(--glass-shadow);
-       width: 100%;
-       max-width: 1200px;
-       position: relative;
-       overflow: hidden;
-   }
-   
-   /* Brillo sutil superior en los paneles */
-   .glass-panel::before {
-       content: '';
-       position: absolute;
-       top: 0; left: 0; right: 0;
-       height: 1px;
-       background: linear-gradient(90deg, transparent, var(--cyan-glow), transparent);
-       opacity: 0.3;
-   }
-   
-   .layout-grid {
-       display: grid;
-       grid-template-columns: 1fr 1fr;
-       gap: 4rem;
-       width: 100%;
-       max-width: 1400px;
-       height: 80vh;
-   }
-   
-   .content-panel {
-       display: flex;
-       flex-direction: column;
-       justify-content: center;
-       height: 100%;
-   }
-   
-   /* ==========================================================================
-      TIPOGRAFÍA Y TEXTOS
-      ========================================================================== */
-   .text-center { text-align: center; }
-   
-   .univ-header {
-       margin-bottom: 2rem;
-       display: flex;
-       justify-content: center;
-       gap: 1rem;
-   }
-   
-   .tag {
-       background: var(--cyan-dim);
-       color: var(--cyan-glow);
-       padding: 0.4rem 1rem;
-       border-radius: 20px;
-       font-size: 0.85rem;
-       font-weight: 600;
-       letter-spacing: 1px;
-       text-transform: uppercase;
-       border: 1px solid rgba(0, 240, 255, 0.3);
-   }
-   
-   .main-title {
-       font-size: 4.5rem;
-       font-weight: 800;
-       line-height: 1.1;
-       margin-bottom: 1rem;
-       background: linear-gradient(135deg, #fff, var(--text-muted));
-       -webkit-background-clip: text;
-       -webkit-text-fill-color: transparent;
-       filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
-   }
-   
-   .sub-title {
-       font-size: 1.8rem;
-       color: var(--text-tech);
-       font-weight: 300;
-       margin-bottom: 4rem;
-   }
-   
-   .section-title {
-       font-size: 3rem;
-       color: #fff;
-       margin-bottom: 1rem;
-       border-left: 4px solid var(--cyan-glow);
-       padding-left: 1rem;
-   }
-   
-   .section-desc {
-       font-size: 1.2rem;
-       color: var(--text-muted);
-       line-height: 1.6;
-       margin-bottom: 2rem;
-   }
-   
-   /* ==========================================================================
-      EQUIPO Y PORTADA
-      ========================================================================== */
-   .team-grid {
-       display: flex;
-       justify-content: center;
-       gap: 3rem;
-       margin-bottom: 3rem;
-   }
-   
-   .team-member {
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-   }
-   
-   .role {
-       color: var(--text-tech);
-       font-size: 0.9rem;
-       text-transform: uppercase;
-       letter-spacing: 2px;
-       margin-bottom: 0.5rem;
-   }
-   
-   .name {
-       font-size: 1.3rem;
-       font-weight: 600;
-       color: #e2e8f0;
-   }
-   
-   .footer-info {
-       border-top: 1px solid var(--glass-border);
-       padding-top: 2rem;
-       color: var(--text-muted);
-       font-family: 'JetBrains Mono', monospace;
-       font-size: 0.9rem;
-   }
-   
-   /* ==========================================================================
-      NAVEGACIÓN INTERACTIVA (BOTONES SUB-TEMAS)
-      ========================================================================== */
-   .interactive-nav {
-       display: flex;
-       flex-wrap: wrap;
-       gap: 1rem;
-       margin-bottom: 3rem;
-   }
-   
-   .nav-btn {
-       background: transparent;
-       border: 1px solid var(--text-muted);
-       color: var(--text-muted);
-       padding: 0.8rem 1.5rem;
-       border-radius: 8px;
-       font-family: 'Inter', sans-serif;
-       font-size: 1rem;
-       font-weight: 600;
-       cursor: pointer;
-       transition: all var(--transition-fast);
-       position: relative;
-       overflow: hidden;
-   }
-   
-   .nav-btn:hover {
-       border-color: var(--cyan-glow);
-       color: #fff;
-       box-shadow: 0 0 15px var(--cyan-dim);
-   }
-   
-   .nav-btn.active {
-       background: var(--cyan-dim);
-       border-color: var(--cyan-glow);
-       color: var(--cyan-glow);
-       box-shadow: 0 0 20px var(--cyan-dim) inset;
-   }
-   
-   /* ==========================================================================
-      CONTENEDOR DE ESTADÍSTICAS Y HOVERS (TOOLTIPS)
-      ========================================================================== */
-   .stats-container {
-       display: flex;
-       gap: 2rem;
-       margin-top: auto;
-   }
-   
-   .stat-item {
-       background: rgba(0, 0, 0, 0.3);
-       border: 1px solid rgba(255,255,255,0.05);
-       padding: 1.5rem;
-       border-radius: 12px;
-       flex: 1;
-       position: relative;
-       cursor: help;
-       transition: transform 0.3s ease, border-color 0.3s ease;
-   }
-   
-   .stat-item:hover {
-       transform: translateY(-5px);
-       border-color: var(--cyan-glow);
-   }
-   
-   .stat-value {
-       display: block;
-       font-family: 'JetBrains Mono', monospace;
-       font-size: 2.5rem;
-       font-weight: 800;
-       color: #fff;
-       text-shadow: 0 0 10px rgba(255,255,255,0.3);
-   }
-   
-   .stat-label {
-       display: block;
-       font-size: 0.9rem;
-       color: var(--text-tech);
-       text-transform: uppercase;
-       letter-spacing: 1px;
-       margin-
+:root {
+    --bg-deep: #050b14;
+    --bg-panel: rgba(13, 22, 38, 0.65);
+    --cyan-glow: #00f0ff;
+    --cyan-dim: rgba(0, 240, 255, 0.2);
+    --gold-ax: #ffd700;
+    --gold-dim: rgba(255, 215, 0, 0.15);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-tech: #38bdf8;
+    --glass-border: rgba(56, 189, 248, 0.15);
+    --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    --transition-slow: 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    --transition-fast: 0.3s ease;
+}
+
+/* ==========================================================================
+   RESETEO Y BASE
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-deep);
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.05), transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(255, 215, 0, 0.05), transparent 40%);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden; /* Evita scroll de la página completa */
+    width: 100vw;
+    height: 100vh;
+}
+
+/* ==========================================================================
+   SISTEMA DE SLIDES
+   ========================================================================== */
+#presentation-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95);
+    transition: all var(--transition-slow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    z-index: 1;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    z-index: 10;
+}
+
+/* ==========================================================================
+   COMPONENTES ESTRUCTURALES (GLASSMORPHISM)
+   ========================================================================== */
+.glass-panel {
+    background: var(--bg-panel);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: var(--glass-shadow);
+    width: 100%;
+    max-width: 1300px;
+    position: relative;
+    /* CORRECCIÓN CRÍTICA: Visible para que los tooltips puedan salirse de la caja */
+    overflow: visible; 
+}
+
+.layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    width: 100%;
+    height: 75vh;
+}
+
+.content-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+/* ==========================================================================
+   TIPOGRAFÍA Y TEXTOS
+   ========================================================================== */
+.text-center { text-align: center; }
+
+.univ-header {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.tag {
+    background: var(--cyan-dim);
+    color: var(--cyan-glow);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 1px solid rgba(0, 240, 255, 0.3);
+}
+
+.main-title {
+    font-size: 4.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.sub-title { font-size: 1.8rem; color: var(--text-tech); margin-bottom: 3rem; }
+.section-title { font-size: 3rem; color: #fff; margin-bottom: 1rem; border-left: 4px solid var(--cyan-glow); padding-left: 1rem; }
+.section-desc { font-size: 1.2rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem; }
+
+.team-grid { display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem; }
+.team-member { display: flex; flex-direction: column; align-items: center; }
+.role { color: var(--text-tech); font-size: 0.9rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+.name { font-size: 1.3rem; font-weight: 600; color: #e2e8f0; }
+
+.footer-info {
+    border-top: 1px solid var(--glass-border);
+    padding-top: 2rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   NAVEGACIÓN INTERACTIVA (BOTONES SUB-TEMAS)
+   ========================================================================== */
+.interactive-nav { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
+
+.nav-btn {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.nav-btn:hover { border-color: var(--cyan-glow); color: #fff; box-shadow: 0 0 15px var(--cyan-dim); }
+.nav-btn.active { background: var(--cyan-dim); border-color: var(--cyan-glow); color: var(--cyan-glow); }
+
+/* ==========================================================================
+   ESTADÍSTICAS Y HOVERS (TOOLTIPS REPARADOS)
+   ========================================================================== */
+.stats-container { display: flex; gap: 2rem; margin-top: auto; }
+
+.stat-item {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 1.5rem;
+    border-radius: 12px;
+    flex: 1;
+    position: relative;
+    cursor: help;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover { transform: translateY(-5px); border-color: var(--cyan-glow); background: rgba(0,240,255,0.05); }
+
+.stat-value {
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 2.5rem; font-weight: 800; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+.stat-label { display: block; font-size: 0.9rem; color: var(--text-tech); text-transform: uppercase; margin-top: 0.5rem; }
+
+/* Tooltip estricto y por encima de todo */
+.tooltip-trigger::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 110%; left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--cyan-glow);
+    color: #000;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.tooltip-trigger:hover::after { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+
+/* ==========================================================================
+   PANELES VISUALES (ÁREA SVG 3D REPARADA)
+   ========================================================================== */
+.visual-panel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(56, 189, 248, 0.08) 0%, transparent 70%);
+    border-radius: 24px;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    /* CORRECCIÓN CRÍTICA: Oculta desbordes internos y ancla los hijos absolutos */
+    overflow: hidden; 
+}
+
+.svg-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: scale(0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.svg-container.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    z-index: 5;
+}
+
+.tech-svg { width: 90%; height: 90%; overflow: visible; filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.3)); }
+.center-text { fill: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 14px; text-anchor: middle; }
+
+/* ANIMACIONES GLOBALES CSS */
+@keyframes pulse-wave { 0% { r: 0; opacity: 1; stroke-width: 3; } 100% { r: 120; opacity: 0; stroke-width: 0; } }
+@keyframes dash-flow { to { stroke-dashoffset: -100; } }
+@keyframes float-3d { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+
+/* ==========================================================================
+   TABLA COMPARATIVA (ESTILO MEJORADO)
+   ========================================================================== */
+.table-wrapper {
+    width: 100%;
+    max-height: 55vh;
+    overflow-y: auto;
+    margin-top: 1rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    background: rgba(0,0,0,0.3);
+}
+
+.tech-table { width: 100%; border-collapse: collapse; text-align: left; }
+.tech-table th { padding: 1.5rem; background: rgba(0, 240, 255, 0.1); color: var(--cyan-glow); font-size: 0.9rem; text-transform: uppercase; position: sticky; top: 0; z-index: 10; }
+.tech-table td { padding: 1.2rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.tech-table tbody tr:hover td { background: rgba(56, 189, 248, 0.08); }
+.tech-table .highlight { font-weight: bold; color: #fff; }
+.tech-table .data-speed { font-family: 'JetBrains Mono', monospace; color: var(--cyan-glow); font-weight: 700; }
+.tech-table .trend { background: rgba(255,255,255,0.1); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem; }
+.tech-table .advance { background: var(--cyan-dim); color: var(--cyan-glow); }
+.tech-table .row-ax td { background: linear-gradient(90deg, rgba(255, 215, 0, 0.08), transparent); border-bottom: none;}
+.tech-table .row-ax .highlight { color: var(--gold-ax); }
+.tech-table .glow { color: var(--gold-ax); text-shadow: 0 0 10px var(--gold-dim); font-size: 1.2rem; }
+.tech-table .advance-max { background: var(--gold-dim); color: var(--gold-ax); border: 1px solid rgba(255, 215, 0, 0.3); }
+
+/* ==========================================================================
+   CONTROLES MAESTROS (ANTERIOR / SIGUIENTE REPARADOS)
+   ========================================================================== */
+.presentation-controls {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background: rgba(13, 22, 38, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    border: 1px solid var(--cyan-glow);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(0, 240, 255, 0.2);
+    /* CORRECCIÓN CRÍTICA: z-index extremo para que no quede oculto */
+    z-index: 99999; 
+}
+
+.ctrl-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.ctrl-btn:hover { background: var(--cyan-dim); border-color: var(--cyan-glow); color: var(--cyan-glow); }
+
+.slide-indicators { display: flex; gap: 1rem; }
+.dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s; }
+.dot.active { background: var(--cyan-glow); box-shadow: 0 0 15px var(--cyan-glow); transform: scale(1.4); }
