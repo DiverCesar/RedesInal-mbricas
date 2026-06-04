@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exposición: Estándares Wi-Fi IEEE 802.11</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main id="presentation-container">
+        
+        <section class="slide active" id="slide-portada">
+            <div class="glass-panel text-center">
+                <div class="univ-header">
+                    <span class="tag">Universidad de las Fuerzas Armadas ESPE</span>
+                    <span class="tag">Ingeniería de Software</span>
+                </div>
+                <h1 class="main-title">Redes Inalámbricas</h1>
+                <h2 class="sub-title">Evolución de los Estándares IEEE 802.11 (a/b/g/n/ac/ax)</h2>
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <span class="role">Expositor 1</span>
+                        <span class="name">Jilmar Calderón</span>
+                    </div>
+                    <div class="team-member">
+                        <span class="role">Expositor 2</span>
+                        <span class="name">Gabriel Calvache</span>
+                    </div>
+                    <div class="team-member">
+                        <span class="role">Expositor 3</span>
+                        <span class="name">César Galarza</span>
+                    </div>
+                </div>
+                
+                <div class="footer-info">
+                    <p>Nivel: 5to Semestre | Docente: Ing. Julio Gancino</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="slide-pioneros">
+            <div class="layout-grid">
+                <div class="content-panel glass-panel">
+                    <h2 class="section-title">Los Pioneros</h2>
+                    <p class="section-desc">El establecimiento de la conectividad masiva superando las limitaciones físicas del entorno.</p>
+                    
+                    <nav class="interactive-nav">
+                        <button class="nav-btn active" data-target="vis-csmaca">CSMA/CA</button>
+                        <button class="nav-btn" data-target="vis-80211b">802.11b</button>
+                        <button class="nav-btn" data-target="vis-80211a">802.11a</button>
+                        <button class="nav-btn" data-target="vis-80211g">802.11g</button>
+                    </nav>
+
+                    <div class="stats-container">
+                        <div class="stat-item tooltip-trigger" data-tooltip="Modulación DSSS | 22 MHz Ancho de Canal">
+                            <span class="stat-value">11 Mbps</span>
+                            <span class="stat-label">Max. 802.11b</span>
+                        </div>
+                        <div class="stat-item tooltip-trigger" data-tooltip="Modulación OFDM | 52 Subportadoras">
+                            <span class="stat-value">54 Mbps</span>
+                            <span class="stat-label">Max. 802.11a/g</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-panel">
+                    <div class="svg-container active" id="vis-csmaca">
+                        <svg viewBox="0 0 500 300" class="tech-svg">
+                            <g class="node-ap"><circle cx="250" cy="50" r="20"/></g>
+                            <g class="node-sta1"><circle cx="100" cy="250" r="15"/></g>
+                            <g class="node-sta2"><circle cx="400" cy="250" r="15"/></g>
+                            <g class="signal-waves"><path d="..."/></g>
+                            <text x="250" y="150" class="hover-data" opacity="0">DIFS + SIFS + ACK</text>
+                        </svg>
+                    </div>
+                    <div class="svg-container" id="vis-80211b">
+                        <svg viewBox="0 0 500 300" class="tech-svg freq-24">
+                            <text x="250" y="150" class="center-text">2.4 GHz - Alta Penetración</text>
+                        </svg>
+                    </div>
+                    <div class="svg-container" id="vis-80211a">
+                        <svg viewBox="0 0 500 300" class="tech-svg freq-5">
+                            <text x="250" y="150" class="center-text">5 GHz - Canales Limpios / Corto Alcance</text>
+                        </svg>
+                    </div>
+                    <div class="svg-container" id="vis-80211g">
+                        <svg viewBox="0 0 500 300" class="tech-svg freq-hybrid">
+                            <text x="250" y="150" class="center-text">Convergencia: 54 Mbps @ 2.4 GHz</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="slide-hardware">
+            <div class="layout-grid">
+                <div class="content-panel glass-panel">
+                    <h2 class="section-title">La Revolución del Hardware</h2>
+                    <p class="section-desc">Aprovechando el multipercurso y la multiplexación espacial.</p>
+                    
+                    <nav class="interactive-nav">
+                        <button class="nav-btn active" data-target="vis-mimo">MIMO (802.11n)</button>
+                        <button class="nav-btn" data-target="vis-mumimo">MU-MIMO (802.11ac)</button>
+                        <button class="nav-btn" data-target="vis-beamforming">Beamforming</button>
+                    </nav>
+
+                    <div class="stats-container">
+                        <div class="stat-item tooltip-trigger" data-tooltip="4x4 Antenas | Channel Bonding 40MHz">
+                            <span class="stat-value">600 Mbps</span>
+                            <span class="stat-label">Límite 802.11n</span>
+                        </div>
+                        <div class="stat-item tooltip-trigger" data-tooltip="8x8 Antenas | 256-QAM | Canales 160MHz">
+                            <span class="stat-value">6.9 Gbps</span>
+                            <span class="stat-label">Límite 802.11ac</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-panel">
+                    <div class="svg-container active" id="vis-mimo">
+                        <svg viewBox="0 0 500 300" class="tech-svg">
+                            <text x="250" y="50" class="center-text">Flujos Espaciales Independientes</text>
+                            <path class="mimo-path" d="..."/> 
+                        </svg>
+                    </div>
+                    <div class="svg-container" id="vis-mumimo">
+                        <svg viewBox="0 0 500 300" class="tech-svg">
+                            <text x="250" y="50" class="center-text">Transmisión Simultánea a Múltiples Clientes</text>
+                            <g class="mu-streams"></g>
+                        </svg>
+                    </div>
+                    <div class="svg-container" id="vis-beamforming">
+                        <svg viewBox="0 0 500 300" class="tech-svg">
+                            <text x="250" y="50" class="center-text">Ajuste de Fase para Dirección de Señal</text>
+                            <g class="beam-waves"></g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="slide-eficiencia">
+            <div class="layout-grid">
+                <div class="content-panel glass-panel">
+                    <h2 class="section-title">Eficiencia en Entornos Densos</h2>
+                    <p class="section-desc">Wi-Fi 6 (802.11ax) y 6E priorizan la capacidad de la red sobre el enlace individual.</p>
+                    
+                    <nav class="interactive-nav">
+                        <button class="nav-btn active" data-target="vis-ofdma">OFDMA</button>
+                        <button class="nav-btn" data-target="vis-bss">BSS Coloring</button>
+                        <button class="nav-btn" data-target="vis-twt">Target Wake Time</button>
+                    </nav>
+
+                    <div class="stats-container">
+                        <div class="stat-item tooltip-trigger" data-tooltip="1024-QAM | Unidades de Recursos Granulares">
+                            <span class="stat-value">9.6 Gbps</span>
+                            <span class="stat-label">Capacidad Teórica</span>
+                        </div>
+                        <div class="stat-item tooltip-trigger" data-tooltip="Gestión inteligente de sueño profundo">
+                            <span class="stat-value">7x</span>
+                            <span class="stat-label">Ahorro Batería IoT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-panel">
+                    <div class="svg-container active" id="vis-ofdma">
+                        <svg viewBox="0 0 500 300" class="tech-svg">
+                            <text x="250" y="30" class="center-text">Subdivisión del Canal en Resource Units (RU)</text>
+                            <g class="ofdma-blocks"></g>
+                        </svg>
+                    </div>
+                    <div class="svg-container" id="vis-bss">
+                        <svg viewBox="0 0 500 300" class="tech-svg">
+                            <text x="250" y="30" class="center-text">Reutilización Espacial Agresiva (1-63 bits)</text>
+                            <g class="bss-cells"></g>
+                        </svg>
+                    </div>
+                    <div class="svg-container" id="vis-twt">
+                        <svg viewBox="0 0 500 300" class="tech-svg">
+                            <text x="250" y="30" class="center-text">Sincronización de Periodos de Actividad</text>
+                            <g class="timeline-battery"></g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="slide-tabla">
+            <div class="glass-panel table-panel">
+                <h2 class="section-title text-center">Cuadro Comparativo IEEE 802.11</h2>
+                
+                <div class="table-wrapper">
+                    <table class="tech-table">
+                        <thead>
+                            <tr>
+                                <th>Estándar</th>
+                                <th>Año</th>
+                                <th>Banda</th>
+                                <th>Modulación</th>
+                                <th>Velocidad Máx.</th>
+                                <th>Mejora <span class="arrow-up">⇡</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="highlight">802.11a</td>
+                                <td>1999</td>
+                                <td>5 GHz</td>
+                                <td>OFDM</td>
+                                <td class="data-speed">54 Mbps</td>
+                                <td><span class="trend">Fundamento OFDM</span></td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">802.11b</td>
+                                <td>1999</td>
+                                <td>2.4 GHz</td>
+                                <td>DSSS</td>
+                                <td class="data-speed">11 Mbps</td>
+                                <td><span class="trend">Adopción Masiva</span></td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">802.11g</td>
+                                <td>2003</td>
+                                <td>2.4 GHz</td>
+                                <td>OFDM / DSSS</td>
+                                <td class="data-speed">54 Mbps</td>
+                                <td><span class="trend">Velocidad + Alcance</span></td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">802.11n (Wi-Fi 4)</td>
+                                <td>2009</td>
+                                <td>2.4 / 5 GHz</td>
+                                <td>OFDM + MIMO</td>
+                                <td class="data-speed">600 Mbps</td>
+                                <td><span class="trend advance">Multiplexación Espacial</span></td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">802.11ac (Wi-Fi 5)</td>
+                                <td>2013</td>
+                                <td>5 GHz</td>
+                                <td>OFDM + MU-MIMO</td>
+                                <td class="data-speed">6.9 Gbps</td>
+                                <td><span class="trend advance">Multiusuario (DL)</span></td>
+                            </tr>
+                            <tr class="row-ax">
+                                <td class="highlight">802.11ax (Wi-Fi 6)</td>
+                                <td>2021</td>
+                                <td>2.4 / 5 / 6 GHz</td>
+                                <td>OFDMA + MU-MIMO</td>
+                                <td class="data-speed glow">9.6 Gbps</td>
+                                <td><span class="trend advance-max">Máxima Eficiencia Densa</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <div class="presentation-controls">
+            <button id="btn-prev" class="ctrl-btn">❮ Anterior</button>
+            <div class="slide-indicators">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+            <button id="btn-next" class="ctrl-btn">Siguiente ❯</button>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
