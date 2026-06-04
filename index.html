@@ -67,26 +67,27 @@
                 <div class="visual-panel">
                     <div class="svg-container active" id="vis-csmaca">
                         <svg viewBox="0 0 500 300" class="tech-svg">
-                            <g class="node-ap"><circle cx="250" cy="50" r="20"/></g>
-                            <g class="node-sta1"><circle cx="100" cy="250" r="15"/></g>
-                            <g class="node-sta2"><circle cx="400" cy="250" r="15"/></g>
-                            <g class="signal-waves"><path d="..."/></g>
-                            <text x="250" y="150" class="hover-data" opacity="0">DIFS + SIFS + ACK</text>
+                            <g class="node-ap"><circle cx="250" cy="50" r="20" fill="#fff"/></g>
+                            <g class="node-sta1"><circle cx="100" cy="250" r="15" fill="#94a3b8"/></g>
+                            <g class="node-sta2"><circle cx="400" cy="250" r="15" fill="#94a3b8"/></g>
+                            <text x="250" y="30" class="center-text" fill="#fff">Punto de Acceso</text>
+                            <text x="100" y="280" class="center-text">STA 1</text>
+                            <text x="400" y="280" class="center-text">STA 2</text>
                         </svg>
                     </div>
                     <div class="svg-container" id="vis-80211b">
                         <svg viewBox="0 0 500 300" class="tech-svg freq-24">
-                            <text x="250" y="150" class="center-text">2.4 GHz - Alta Penetración</text>
+                            <text x="250" y="100" class="center-text">2.4 GHz - Alta Penetración de Obstáculos</text>
                         </svg>
                     </div>
                     <div class="svg-container" id="vis-80211a">
                         <svg viewBox="0 0 500 300" class="tech-svg freq-5">
-                            <text x="250" y="150" class="center-text">5 GHz - Canales Limpios / Corto Alcance</text>
+                            <text x="250" y="100" class="center-text">5 GHz - Canales Limpios / Corto Alcance</text>
                         </svg>
                     </div>
                     <div class="svg-container" id="vis-80211g">
                         <svg viewBox="0 0 500 300" class="tech-svg freq-hybrid">
-                            <text x="250" y="150" class="center-text">Convergencia: 54 Mbps @ 2.4 GHz</text>
+                            <text x="250" y="100" class="center-text">Convergencia: 54 Mbps usando 2.4 GHz</text>
                         </svg>
                     </div>
                 </div>
@@ -120,19 +121,18 @@
                 <div class="visual-panel">
                     <div class="svg-container active" id="vis-mimo">
                         <svg viewBox="0 0 500 300" class="tech-svg">
-                            <text x="250" y="50" class="center-text">Flujos Espaciales Independientes</text>
-                            <path class="mimo-path" d="..."/> 
+                            <text x="250" y="50" class="center-text">Flujos Espaciales Independientes (Multipercurso)</text>
                         </svg>
                     </div>
                     <div class="svg-container" id="vis-mumimo">
                         <svg viewBox="0 0 500 300" class="tech-svg">
-                            <text x="250" y="50" class="center-text">Transmisión Simultánea a Múltiples Clientes</text>
+                            <text x="250" y="40" class="center-text">Transmisión Simultánea a Múltiples Clientes</text>
                             <g class="mu-streams"></g>
                         </svg>
                     </div>
                     <div class="svg-container" id="vis-beamforming">
                         <svg viewBox="0 0 500 300" class="tech-svg">
-                            <text x="250" y="50" class="center-text">Ajuste de Fase para Dirección de Señal</text>
+                            <text x="250" y="40" class="center-text">Ajuste de Fase para Concentrar la Señal</text>
                             <g class="beam-waves"></g>
                         </svg>
                     </div>
@@ -144,7 +144,7 @@
             <div class="layout-grid">
                 <div class="content-panel glass-panel">
                     <h2 class="section-title">Eficiencia en Entornos Densos</h2>
-                    <p class="section-desc">Wi-Fi 6 (802.11ax) y 6E priorizan la capacidad de la red sobre el enlace individual.</p>
+                    <p class="section-desc">Wi-Fi 6 (802.11ax) y 6E priorizan la capacidad total de la red sobre el enlace individual.</p>
                     
                     <nav class="interactive-nav">
                         <button class="nav-btn active" data-target="vis-ofdma">OFDMA</button>
@@ -153,7 +153,7 @@
                     </nav>
 
                     <div class="stats-container">
-                        <div class="stat-item tooltip-trigger" data-tooltip="1024-QAM | Unidades de Recursos Granulares">
+                        <div class="stat-item tooltip-trigger" data-tooltip="1024-QAM | Banda de 6 GHz">
                             <span class="stat-value">9.6 Gbps</span>
                             <span class="stat-label">Capacidad Teórica</span>
                         </div>
@@ -167,7 +167,7 @@
                 <div class="visual-panel">
                     <div class="svg-container active" id="vis-ofdma">
                         <svg viewBox="0 0 500 300" class="tech-svg">
-                            <text x="250" y="30" class="center-text">Subdivisión del Canal en Resource Units (RU)</text>
+                            <text x="250" y="50" class="center-text">Subdivisión del Canal en Resource Units (RU)</text>
                             <g class="ofdma-blocks"></g>
                         </svg>
                     </div>
@@ -179,7 +179,7 @@
                     </div>
                     <div class="svg-container" id="vis-twt">
                         <svg viewBox="0 0 500 300" class="tech-svg">
-                            <text x="250" y="30" class="center-text">Sincronización de Periodos de Actividad</text>
+                            <text x="250" y="30" class="center-text">Sincronización de Periodos de Actividad (IoT)</text>
                             <g class="timeline-battery"></g>
                         </svg>
                     </div>
@@ -189,7 +189,7 @@
 
         <section class="slide" id="slide-tabla">
             <div class="glass-panel table-panel">
-                <h2 class="section-title text-center">Cuadro Comparativo IEEE 802.11</h2>
+                <h2 class="section-title text-center" style="border: none; padding: 0;">Cuadro Comparativo IEEE 802.11</h2>
                 
                 <div class="table-wrapper">
                     <table class="tech-table">
@@ -200,7 +200,7 @@
                                 <th>Banda</th>
                                 <th>Modulación</th>
                                 <th>Velocidad Máx.</th>
-                                <th>Mejora <span class="arrow-up">⇡</span></th>
+                                <th>Mejora Principal <span class="arrow-up">⇡</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -242,10 +242,10 @@
                                 <td>5 GHz</td>
                                 <td>OFDM + MU-MIMO</td>
                                 <td class="data-speed">6.9 Gbps</td>
-                                <td><span class="trend advance">Multiusuario (DL)</span></td>
+                                <td><span class="trend advance">Multiusuario simultáneo (DL)</span></td>
                             </tr>
                             <tr class="row-ax">
-                                <td class="highlight">802.11ax (Wi-Fi 6)</td>
+                                <td class="highlight">802.11ax (Wi-Fi 6/6E)</td>
                                 <td>2021</td>
                                 <td>2.4 / 5 / 6 GHz</td>
                                 <td>OFDMA + MU-MIMO</td>
