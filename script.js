@@ -1,6 +1,7 @@
 /**
  * ==========================================================================
- * JARVIS HOLOGRAPHIC ENGINE v3.2 - HOTFIX EMERGENCY
+ * JARVIS HOLOGRAPHIC ENGINE v3.3 - HOTFIX DEFINITIVO
+ * PROTOCOL: ACTIVE & ISOLATED
  * ==========================================================================
  */
 
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   1. CONTROLADOR MAESTRO
+   1. CONTROLADOR MAESTRO Y BLOQUEO DE CAPAS INVISIBLES
    ========================================================================== */
 let currentSlide = 0;
 let slides = [];
@@ -45,23 +46,39 @@ function initNavigation() {
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => goToSlide(index));
     });
+    
+    // Inicializar el estado de bloqueo en todas las diapositivas
+    slides.forEach((s, index) => {
+        if(index !== currentSlide) s.style.pointerEvents = 'none';
+    });
 }
 
 function goToSlide(index) {
     if (index < 0 || index >= totalSlides) return;
+    
+    // Apagar la actual y bloquear su interacción
     slides[currentSlide].classList.remove('active');
+    slides[currentSlide].style.pointerEvents = 'none';
     if(dots[currentSlide]) dots[currentSlide].classList.remove('active');
     
     currentSlide = index;
+    
+    // Encender la nueva y habilitar su interacción
     slides[currentSlide].classList.add('active');
+    slides[currentSlide].style.pointerEvents = 'auto';
     if(dots[currentSlide]) dots[currentSlide].classList.add('active');
 }
 
 /* ==========================================================================
-   2. SUB-NAVEGACIÓN
+   2. SUB-NAVEGACIÓN CON BLOQUEO DE INTERFERENCIAS
    ========================================================================== */
 function initSubNavigation() {
     const navButtons = document.querySelectorAll('.nav-btn');
+    
+    // Inicializar bloqueo en todos los SVGs ocultos para que no roben el ratón
+    document.querySelectorAll('.svg-container').forEach(svg => {
+        if(!svg.classList.contains('active')) svg.style.pointerEvents = 'none';
+    });
     
     navButtons.forEach(btn => {
         btn.addEventListener('click', function() {
@@ -70,13 +87,21 @@ function initSubNavigation() {
             
             parentSection.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            parentSection.querySelectorAll('.svg-container').forEach(svg => svg.classList.remove('active'));
             
+            // Apagar y bloquear TODOS los SVGs de esta sección
+            parentSection.querySelectorAll('.svg-container').forEach(svg => {
+                svg.classList.remove('active');
+                svg.style.pointerEvents = 'none';
+            });
+            
+            // Encender y desbloquear SOLO el SVG objetivo
             const targetId = this.getAttribute('data-target');
             const targetSvg = document.getElementById(targetId);
             
             if(targetSvg) {
                 targetSvg.classList.add('active');
+                targetSvg.style.pointerEvents = 'auto';
+                
                 const hudSubtitle = parentSection.querySelector('.hud-subtitle');
                 if(hudSubtitle) {
                     typeWriterEffect(hudSubtitle, this.innerText.toUpperCase());
@@ -100,7 +125,7 @@ function typeWriterEffect(element, text) {
 }
 
 /* ==========================================================================
-   3. ESCÁNER HOLOGRÁFICO DE RATÓN
+   3. ESCÁNER HOLOGRÁFICO DE RATÓN (Tooltip Global)
    ========================================================================== */
 function initTooltipEngine() {
     const tooltip = document.getElementById('global-tech-tooltip');
@@ -179,19 +204,20 @@ function initVisualEngine() {
     buildTWT();
 }
 
+/* --- ESCENAS PIONEROS --- */
 function buildCSMACA() {
     const g = document.querySelector('.csmaca-waves');
     if(!g) return;
     g.appendChild(createSVG('path', { d: 'M 120 230 L 250 70 L 380 230', fill: 'none', stroke: 'rgba(0,240,255,0.15)', 'stroke-width': 1, 'stroke-dasharray': '5 5' }));
     setInterval(() => {
         if(!document.querySelector('#vis-csmaca').classList.contains('active')) return;
-        let scanWave = createSVG('circle', { cx: 380, cy: 230, r: 10, fill: 'none', stroke: 'rgba(148, 163, 184, 0.6)', 'stroke-width': 2, style: 'animation: pulse-wave 2s ease-out forwards;' });
+        let scanWave = createSVG('circle', { cx: 380, cy: 230, r: 10, fill: 'none', stroke: 'rgba(148, 163, 184, 0.6)', 'stroke-width': 2, style: 'animation: pulse-wave 2s ease-out forwards; pointer-events: none;' });
         g.appendChild(scanWave);
         setTimeout(() => scanWave.remove(), 2000);
     }, 1500);
     setInterval(() => {
         if(!document.querySelector('#vis-csmaca').classList.contains('active')) return;
-        let dataPacket = createSVG('circle', { cx: 120, cy: 230, r: 5, fill: '#00f0ff', filter: 'url(#glow-cyan)' });
+        let dataPacket = createSVG('circle', { cx: 120, cy: 230, r: 5, fill: '#00f0ff', filter: 'url(#glow-cyan)', style:'pointer-events: none;' });
         g.appendChild(dataPacket);
         let frame = 0;
         function animatePacket() {
@@ -203,7 +229,7 @@ function buildCSMACA() {
             if(frame < 1) requestAnimationFrame(animatePacket);
             else {
                 dataPacket.remove();
-                let ackWave = createSVG('circle', { cx: 250, cy: 70, r: 20, fill: 'none', stroke: '#00f0ff', 'stroke-width': 3, style: 'animation: pulse-wave 1s ease-out forwards;' });
+                let ackWave = createSVG('circle', { cx: 250, cy: 70, r: 20, fill: 'none', stroke: '#00f0ff', 'stroke-width': 3, style: 'animation: pulse-wave 1s ease-out forwards; pointer-events: none;' });
                 g.appendChild(ackWave);
                 setTimeout(() => ackWave.remove(), 1000);
             }
@@ -238,6 +264,7 @@ function startOscilloscope(svg, color, frequency, amplitude, speed, offset=0) {
     animateWave();
 }
 
+/* --- ESCENAS HARDWARE --- */
 function buildMIMOMatrix() {
     const g = document.querySelector('.mimo-paths');
     if(!g) return;
@@ -258,9 +285,13 @@ function buildMUMIMO() {
     const targets = [{x: 400, y: 70, type: "Smartphone_User_1"}, {x: 400, y: 120, type: "SmartTV_User_2"}, {x: 400, y: 170, type: "Laptop_User_3"}, {x: 400, y: 220, type: "Tablet_User_4"}];
     targets.forEach((t, index) => {
         let node = createSVG('g', {'class': 'interactive-node', 'data-tech-tip': `Cliente: ${t.type} | Stream espacial dedicado operando simultáneamente.`});
-        node.appendChild(createSVG('use', {href: '#icon-laptop', x: t.x, y: t.y}));
-        node.appendChild(createSVG('text', {x: t.x + 35, y: t.y + 5, class: 'svg-tech-label', fill: colors[index], style: 'text-anchor: start;'}).appendChild(document.createTextNode(`STR_${index+1}`)).parentNode);
+        node.appendChild(createSVG('use', {href: '#icon-laptop', x: t.x, y: t.y, style:'pointer-events:none;'}));
+        node.appendChild(createSVG('text', {x: t.x + 35, y: t.y + 5, class: 'svg-tech-label', fill: colors[index], style: 'text-anchor: start; pointer-events:none;'}).appendChild(document.createTextNode(`STR_${index+1}`)).parentNode);
+        
+        // Hitbox dedicado para MU-MIMO
+        node.appendChild(createSVG('rect', {x: t.x - 20, y: t.y - 20, width: 90, height: 40, fill: 'transparent'}));
         g.appendChild(node);
+        
         g.appendChild(createSVG('path', {
             d: `M 80 150 C 200 150, 250 ${t.y}, ${t.x - 20} ${t.y}`, fill: 'none', stroke: colors[index], 'stroke-width': 3,
             style: `opacity: 0.8; filter: drop-shadow(0 0 8px ${colors[index]}); stroke-dasharray: 15 10; animation: dash-flow 0.8s linear infinite reverse; pointer-events:none;`
@@ -287,6 +318,7 @@ function buildBeamforming() {
     }, 50);
 }
 
+/* --- ESCENAS EFICIENCIA --- */
 function buildOFDMAGrid() {
     const g = document.querySelector('.ofdma-blocks');
     if(!g) return;
@@ -315,12 +347,12 @@ function buildOFDMAGrid() {
     }
 }
 
-/* --- REPARACIÓN: BSS COLORING RESTAURADO AL ESTILO ORIGINAL --- */
+/* REPARADO: HITBOXES INDEPENDIENTES PARA EVITAR SOLAPAMIENTO DE CIRCULOS */
 function buildBSSColoring() {
     const g = document.querySelector('.bss-cells');
     if(!g) return;
     
-    g.innerHTML = ''; // Limpiar cualquier residuo previo
+    g.innerHTML = ''; 
     const cells = [
         {x: 130, y: 150, c: '#00f0ff', id: 'BSS_Color_42'}, 
         {x: 370, y: 150, c: '#ffd700', id: 'BSS_Color_12'}, 
@@ -328,35 +360,35 @@ function buildBSSColoring() {
     ];
     
     cells.forEach(c => {
-        let node = createSVG('g', {'class': 'interactive-node', 'data-tech-tip': `Identificador de Red: ${c.id}.<br>Mecanismo: Reutilización Espacial Agresiva.<br>Las estaciones ignorarán tramas de otros colores, permitiendo transmitir simultáneamente.`});
-        
-        // Área de cobertura con pulso (opacidad fija en 0.15 para que sea transparente)
-        node.appendChild(createSVG('circle', {
-            cx: c.x, cy: c.y, r: 90,
-            fill: c.c, opacity: 0.15, stroke: c.c, 'stroke-width': 2, 'stroke-dasharray': '8 8',
+        // El pulso y elementos visuales DEBEN tener pointer-events: none para no estorbar
+        g.appendChild(createSVG('circle', {
+            cx: c.x, cy: c.y, r: 90, fill: c.c, opacity: 0.15, stroke: c.c, 'stroke-width': 2, 'stroke-dasharray': '8 8',
             style: `animation: pulse-wave 5s infinite linear; pointer-events: none;`
         }));
         
-        // Círculo central blanco puro (como estaba antes)
-        node.appendChild(createSVG('circle', {cx: c.x, cy: c.y, r: 8, fill: '#fff'}));
+        g.appendChild(createSVG('use', {href: '#icon-router', x: c.x, y: c.y, transform: `scale(0.8) translate(${-c.x*0.2}, ${-c.y*0.2})`, style: 'pointer-events: none;'}));
         
-        // Texto
-        let textNode = createSVG('text', {x: c.x, y: c.y - 20, class: 'svg-tech-label'});
+        let textNode = createSVG('text', {x: c.x, y: c.y - 20, class: 'svg-tech-label', style: 'pointer-events: none;'});
         textNode.appendChild(document.createTextNode(c.id));
-        node.appendChild(textNode);
+        g.appendChild(textNode);
         
-        g.appendChild(node);
+        // ZONA DE IMPACTO (Hitbox invisible) - Es lo único que interactúa
+        let hitbox = createSVG('circle', {
+            cx: c.x, cy: c.y, r: 30, fill: 'transparent', class: 'interactive-node',
+            'data-tech-tip': `Identificador de Red: ${c.id}.<br>Mecanismo: Reutilización Espacial Agresiva.<br>Las estaciones ignorarán tramas de otros colores, permitiendo transmitir simultáneamente sin esperar.`
+        });
+        g.appendChild(hitbox);
     });
 }
 
-/* --- REPARACIÓN: TARGET WAKE TIME TOTALMENTE REFACTORIZADO Y ROBUSTO --- */
+/* REPARADO: TARGET WAKE TIME COMPLETAMENTE REFACTORIZADO Y ESTÉTICO */
 function buildTWT() {
     const g = document.querySelector('.timeline-battery');
     if(!g) return;
     
-    g.innerHTML = ''; // Limpiar residuos
+    g.innerHTML = '';
 
-    // 1. SENSOR IOT DIBUJADO A MANO (Izquierda)
+    // SENSOR IOT (Izquierda)
     let sensor = createSVG('g', {transform: 'translate(30, 80)'});
     sensor.appendChild(createSVG('rect', {x:0, y:0, width:30, height:50, rx:4, fill:'#0f172a', stroke:'#00f0ff', 'stroke-width':2}));
     sensor.appendChild(createSVG('circle', {cx:15, cy:15, r:6, fill:'#00f0ff'}));
@@ -366,7 +398,7 @@ function buildTWT() {
     sensor.appendChild(textSensor);
     g.appendChild(sensor);
 
-    // 2. PUNTO DE ACCESO DIBUJADO A MANO (Derecha)
+    // PUNTO DE ACCESO (Derecha)
     let ap = createSVG('g', {transform: 'translate(410, 90)'});
     ap.appendChild(createSVG('rect', {x:0, y:0, width:40, height:20, rx:3, fill:'#1e293b', stroke:'#00f0ff', 'stroke-width':2}));
     ap.appendChild(createSVG('line', {x1:5, y1:0, x2:0, y2:-20, stroke:'#00f0ff', 'stroke-width':2}));
@@ -377,40 +409,41 @@ function buildTWT() {
     ap.appendChild(textAP);
     g.appendChild(ap);
 
-    // 3. LÍNEA DE TIEMPO BASE
+    // LÍNEA DE TIEMPO
     g.appendChild(createSVG('line', {x1: 40, y1: 220, x2: 460, y2: 220, stroke: 'rgba(0,240,255,0.3)', 'stroke-width': 2}));
 
-    // 4. CICLOS DE SUEÑO Y TRANSMISIÓN
     for(let i=0; i<3; i++) {
-        // Bloque de Sueño Profundo
+        // Hitbox y grupo para Sleep Mode
         let sleepNode = createSVG('g', {'class': 'interactive-node', 'data-tech-tip': `Fase SLEEP (Ahorro Energético).<br>El radio Wi-Fi se apaga por completo hasta el milisegundo exacto acordado.`});
         sleepNode.appendChild(createSVG('rect', {x: 80 + (i*120), y: 216, width: 100, height: 8, fill: '#1e293b', rx: 2, stroke:'#94a3b8', 'stroke-width':0.5}));
         g.appendChild(sleepNode);
 
-        // Pico Activo de Transmisión
-        let activeNode = createSVG('g', {'class': 'interactive-node', 'data-tech-tip': `Fase WAKE / TX (Transmisión).<br>Intercambio de datos ultrarrápido y vuelta a dormir.`});
+        // Hitbox y grupo para Transmisión
+        let activeNode = createSVG('g', {'class': 'interactive-node', 'data-tech-tip': `Fase WAKE / TX (Transmisión).<br>Intercambio de datos ultrarrápido y vuelta a dormir sin generar colisiones en el canal.`});
         activeNode.appendChild(createSVG('rect', {
             x: 180 + (i*120), y: 150, width: 12, height: 70, fill: '#00f0ff', rx: 2,
             style: `opacity: 0.9; filter: drop-shadow(0 0 10px #00f0ff); animation: pulse-wave 3s infinite ${i*0.8}s; pointer-events: none;`
         }));
         
-        // Rayo de conexión al AP
+        // Rayo de conexión
         activeNode.appendChild(createSVG('path', {
             d: `M ${186 + (i*120)} 150 Q 250 100 410 100`,
             fill: 'none', stroke: '#ffd700', 'stroke-width': 2, 'stroke-dasharray': '5 5',
             style: `opacity:0.6; animation: dash-flow 1s linear infinite reverse; pointer-events:none;`
         }));
         
+        // Hitbox transparente para facilitar el hover en la transmisión
+        activeNode.appendChild(createSVG('rect', {x: 170 + (i*120), y: 140, width: 30, height: 90, fill: 'transparent'}));
         g.appendChild(activeNode);
     }
 
-    // 5. BATERÍA GIGANTE INDICADORA
-    let batGroup = createSVG('g', {transform: 'translate(180, 20)', class:'interactive-node', 'data-tech-tip':'Impacto directo de TWT:<br>Extiende la vida útil de las baterías IoT hasta 7 veces.'});
+    // BATERÍA GIGANTE INDICADORA
+    let batGroup = createSVG('g', {transform: 'translate(180, 20)', class:'interactive-node', 'data-tech-tip':'Impacto directo de TWT:<br>Extiende la vida útil de las baterías IoT hasta 7 veces en comparación con estándares anteriores (802.11ac/n).'});
     batGroup.appendChild(createSVG('rect', {x:0, y:0, width:100, height:35, rx:5, fill:'rgba(15,23,42,0.8)', stroke:'#ffd700', 'stroke-width':2}));
     batGroup.appendChild(createSVG('rect', {x:102, y:10, width:6, height:15, rx:2, fill:'#ffd700'}));
-    batGroup.appendChild(createSVG('rect', {x:4, y:4, width:92, height:27, rx:2, fill:'#ffd700', style:'animation: pulse-wave 4s infinite alternate;'}));
+    batGroup.appendChild(createSVG('rect', {x:4, y:4, width:92, height:27, rx:2, fill:'#ffd700', style:'animation: pulse-wave 4s infinite alternate; pointer-events:none;'}));
     
-    let batText = createSVG('text', {x:50, y:23, fill:'#000', 'font-weight':'900', 'font-family':'JetBrains Mono', 'font-size':'14px', 'text-anchor':'middle'});
+    let batText = createSVG('text', {x:50, y:23, fill:'#000', 'font-weight':'900', 'font-family':'JetBrains Mono', 'font-size':'14px', 'text-anchor':'middle', style:'pointer-events:none;'});
     batText.appendChild(document.createTextNode('7x BATTERY LIFE'));
     batGroup.appendChild(batText);
     
