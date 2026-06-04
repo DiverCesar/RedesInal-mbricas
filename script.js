@@ -1,18 +1,15 @@
 /**
  * ==========================================================================
- * JARVIS HOLOGRAPHIC ENGINE v3.1 - IEEE 802.11 PRESENTATION
- * PROTOCOL: ACTIVE & STABLE
+ * JARVIS HOLOGRAPHIC ENGINE v3.2 - HOTFIX EMERGENCY
  * ==========================================================================
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("JARVIS: Booting Holographic Presentation Engine...");
     initNavigation();
     initSubNavigation();
     initTooltipEngine();
     initVisualEngine();
     initParallax3D();
-    console.log("JARVIS: All systems green. Ready, Sir.");
 });
 
 /* ==========================================================================
@@ -61,7 +58,7 @@ function goToSlide(index) {
 }
 
 /* ==========================================================================
-   2. SUB-NAVEGACIÓN Y TÍTULOS LIMPIOS
+   2. SUB-NAVEGACIÓN
    ========================================================================== */
 function initSubNavigation() {
     const navButtons = document.querySelectorAll('.nav-btn');
@@ -82,7 +79,6 @@ function initSubNavigation() {
                 targetSvg.classList.add('active');
                 const hudSubtitle = parentSection.querySelector('.hud-subtitle');
                 if(hudSubtitle) {
-                    // SE ELIMINÓ LA PALABRA "DETECTADO". AHORA ES TOTALMENTE PROFESIONAL.
                     typeWriterEffect(hudSubtitle, this.innerText.toUpperCase());
                 }
             }
@@ -104,7 +100,7 @@ function typeWriterEffect(element, text) {
 }
 
 /* ==========================================================================
-   3. ESCÁNER HOLOGRÁFICO DE RATÓN (Tooltip Global Restaurado)
+   3. ESCÁNER HOLOGRÁFICO DE RATÓN
    ========================================================================== */
 function initTooltipEngine() {
     const tooltip = document.getElementById('global-tech-tooltip');
@@ -112,9 +108,17 @@ function initTooltipEngine() {
 
     window.addEventListener('mousemove', (e) => {
         const targetTech = e.target.closest('[data-tech-tip]');
+        const targetStat = e.target.closest('[data-tooltip]');
+        
+        let tipText = "";
         
         if (targetTech) {
-            let tipText = `<span style="color:#00f0ff;">[ANÁLISIS]:</span><br><br>${targetTech.getAttribute('data-tech-tip')}`;
+            tipText = `<span style="color:#00f0ff;">[ANÁLISIS ESTRUCTURAL]:</span><br><br>${targetTech.getAttribute('data-tech-tip')}`;
+        } else if (targetStat) {
+            tipText = `<span style="color:#ffd700;">[DATOS TÉCNICOS]:</span><br><br>${targetStat.getAttribute('data-tooltip')}`;
+        }
+        
+        if (tipText !== "") {
             tooltip.innerHTML = tipText;
             tooltip.classList.add('visible');
             
@@ -151,7 +155,7 @@ function initParallax3D() {
 }
 
 /* ==========================================================================
-   5. MOTOR DE INYECCIÓN SVG (CON EL NUEVO TWT)
+   5. MOTOR DE INYECCIÓN SVG
    ========================================================================== */
 const SVG_NS = "http://www.w3.org/2000/svg";
 
@@ -172,7 +176,7 @@ function initVisualEngine() {
     buildBeamforming();
     buildOFDMAGrid();
     buildBSSColoring();
-    buildTWT_Redesigned(); // Llamamos al gráfico completamente nuevo
+    buildTWT();
 }
 
 function buildCSMACA() {
@@ -311,60 +315,88 @@ function buildOFDMAGrid() {
     }
 }
 
+/* --- REPARACIÓN: BSS COLORING RESTAURADO AL ESTILO ORIGINAL --- */
 function buildBSSColoring() {
     const g = document.querySelector('.bss-cells');
     if(!g) return;
-    const cells = [{x: 130, y: 150, c: '#00f0ff', id: 'BSS_Color_42'}, {x: 370, y: 150, c: '#ffd700', id: 'BSS_Color_12'}, {x: 250, y: 250, c: '#ff0055', id: 'BSS_Color_55'}];
+    
+    g.innerHTML = ''; // Limpiar cualquier residuo previo
+    const cells = [
+        {x: 130, y: 150, c: '#00f0ff', id: 'BSS_Color_42'}, 
+        {x: 370, y: 150, c: '#ffd700', id: 'BSS_Color_12'}, 
+        {x: 250, y: 250, c: '#ff0055', id: 'BSS_Color_55'}
+    ];
+    
     cells.forEach(c => {
         let node = createSVG('g', {'class': 'interactive-node', 'data-tech-tip': `Identificador de Red: ${c.id}.<br>Mecanismo: Reutilización Espacial Agresiva.<br>Las estaciones ignorarán tramas de otros colores, permitiendo transmitir simultáneamente.`});
-        node.appendChild(createSVG('circle', { cx: c.x, cy: c.y, r: 90, fill: c.c, opacity: 0.1, stroke: c.c, 'stroke-width': 2, 'stroke-dasharray': '8 8', style: `animation: pulse-wave 5s infinite linear; pointer-events: none;` }));
-        node.appendChild(createSVG('use', {href: '#icon-router', x: c.x, y: c.y, transform: `scale(0.8) translate(${-c.x*0.2}, ${-c.y*0.2})`}));
-        node.appendChild(createSVG('text', {x: c.x, y: c.y - 20, class: 'svg-tech-label'}).appendChild(document.createTextNode(c.id)).parentNode);
+        
+        // Área de cobertura con pulso (opacidad fija en 0.15 para que sea transparente)
+        node.appendChild(createSVG('circle', {
+            cx: c.x, cy: c.y, r: 90,
+            fill: c.c, opacity: 0.15, stroke: c.c, 'stroke-width': 2, 'stroke-dasharray': '8 8',
+            style: `animation: pulse-wave 5s infinite linear; pointer-events: none;`
+        }));
+        
+        // Círculo central blanco puro (como estaba antes)
+        node.appendChild(createSVG('circle', {cx: c.x, cy: c.y, r: 8, fill: '#fff'}));
+        
+        // Texto
+        let textNode = createSVG('text', {x: c.x, y: c.y - 20, class: 'svg-tech-label'});
+        textNode.appendChild(document.createTextNode(c.id));
+        node.appendChild(textNode);
+        
         g.appendChild(node);
     });
 }
 
-/* --- ESCENA 8: TARGET WAKE TIME (COMPLETAMENTE REDISEÑADO) --- */
-function buildTWT_Redesigned() {
+/* --- REPARACIÓN: TARGET WAKE TIME TOTALMENTE REFACTORIZADO Y ROBUSTO --- */
+function buildTWT() {
     const g = document.querySelector('.timeline-battery');
     if(!g) return;
     
-    // 1. DIBUJAR SENSOR IOT (Izquierda)
-    let sensorGroup = createSVG('g', {transform: 'translate(30, 80)'});
-    sensorGroup.appendChild(createSVG('rect', {x:0, y:0, width:40, height:60, rx:5, fill:'#0f172a', stroke:'#00f0ff', 'stroke-width':2}));
-    sensorGroup.appendChild(createSVG('circle', {cx:20, cy:20, r:8, fill:'#00f0ff', filter:'url(#glow-cyan)'}));
-    sensorGroup.appendChild(createSVG('line', {x1:20, y1:40, x2:20, y2:50, stroke:'#00f0ff', 'stroke-width':2}));
-    sensorGroup.appendChild(createSVG('line', {x1:10, y1:45, x2:30, y2:45, stroke:'#00f0ff', 'stroke-width':2}));
-    sensorGroup.appendChild(createSVG('text', {x:20, y:80, class:'svg-tech-label'}).appendChild(document.createTextNode('IoT SENSOR')).parentNode);
-    g.appendChild(sensorGroup);
+    g.innerHTML = ''; // Limpiar residuos
 
-    // 2. DIBUJAR PUNTO DE ACCESO (Derecha)
-    let apGroup = createSVG('g', {transform: 'translate(430, 80)'});
-    apGroup.appendChild(createSVG('use', {href:'#icon-router', x:20, y:30, transform:'scale(1.2) translate(-15, -15)'}));
-    apGroup.appendChild(createSVG('text', {x:20, y:80, class:'svg-tech-label'}).appendChild(document.createTextNode('AP (TWT)')).parentNode);
-    g.appendChild(apGroup);
+    // 1. SENSOR IOT DIBUJADO A MANO (Izquierda)
+    let sensor = createSVG('g', {transform: 'translate(30, 80)'});
+    sensor.appendChild(createSVG('rect', {x:0, y:0, width:30, height:50, rx:4, fill:'#0f172a', stroke:'#00f0ff', 'stroke-width':2}));
+    sensor.appendChild(createSVG('circle', {cx:15, cy:15, r:6, fill:'#00f0ff'}));
+    sensor.appendChild(createSVG('line', {x1:15, y1:30, x2:15, y2:40, stroke:'#00f0ff', 'stroke-width':2}));
+    let textSensor = createSVG('text', {x:15, y:70, class:'svg-tech-label', style:'text-anchor:middle;'});
+    textSensor.appendChild(document.createTextNode('IoT SENSOR'));
+    sensor.appendChild(textSensor);
+    g.appendChild(sensor);
 
-    // 3. DIBUJAR LÍNEA DE TIEMPO LATIDOS
-    g.appendChild(createSVG('line', {x1: 80, y1: 220, x2: 420, y2: 220, stroke: 'rgba(0,240,255,0.3)', 'stroke-width': 2}));
-    g.appendChild(createSVG('text', {x: 250, y: 260, class:'svg-tech-label', fill:'#94a3b8'}).appendChild(document.createTextNode('TIEMPO: Sincronización de Milisegundos')).parentNode);
+    // 2. PUNTO DE ACCESO DIBUJADO A MANO (Derecha)
+    let ap = createSVG('g', {transform: 'translate(410, 90)'});
+    ap.appendChild(createSVG('rect', {x:0, y:0, width:40, height:20, rx:3, fill:'#1e293b', stroke:'#00f0ff', 'stroke-width':2}));
+    ap.appendChild(createSVG('line', {x1:5, y1:0, x2:0, y2:-20, stroke:'#00f0ff', 'stroke-width':2}));
+    ap.appendChild(createSVG('line', {x1:35, y1:0, x2:40, y2:-20, stroke:'#00f0ff', 'stroke-width':2}));
+    ap.appendChild(createSVG('circle', {cx:20, cy:10, r:3, fill:'#00f0ff'}));
+    let textAP = createSVG('text', {x:20, y:45, class:'svg-tech-label', style:'text-anchor:middle;'});
+    textAP.appendChild(document.createTextNode('AP (TWT)'));
+    ap.appendChild(textAP);
+    g.appendChild(ap);
+
+    // 3. LÍNEA DE TIEMPO BASE
+    g.appendChild(createSVG('line', {x1: 40, y1: 220, x2: 460, y2: 220, stroke: 'rgba(0,240,255,0.3)', 'stroke-width': 2}));
 
     // 4. CICLOS DE SUEÑO Y TRANSMISIÓN
     for(let i=0; i<3; i++) {
         // Bloque de Sueño Profundo
-        let sleepNode = createSVG('g', {'class': 'interactive-node', 'data-tech-tip': `Fase TWT Negociada.<br>Estado: SLEEP (Ahorro Energético).<br>El radio Wi-Fi se apaga por completo hasta el milisegundo exacto acordado.`});
-        sleepNode.appendChild(createSVG('rect', {x: 90 + (i*110), y: 216, width: 95, height: 8, fill: '#1e293b', rx: 2, stroke:'#94a3b8', 'stroke-width':0.5}));
+        let sleepNode = createSVG('g', {'class': 'interactive-node', 'data-tech-tip': `Fase SLEEP (Ahorro Energético).<br>El radio Wi-Fi se apaga por completo hasta el milisegundo exacto acordado.`});
+        sleepNode.appendChild(createSVG('rect', {x: 80 + (i*120), y: 216, width: 100, height: 8, fill: '#1e293b', rx: 2, stroke:'#94a3b8', 'stroke-width':0.5}));
         g.appendChild(sleepNode);
 
         // Pico Activo de Transmisión
-        let activeNode = createSVG('g', {'class': 'interactive-node', 'data-tech-tip': `Fase TWT Negociada.<br>Estado: WAKE / TX (Transmisión).<br>Intercambio de datos ultrarrápido y vuelta a dormir sin generar colisiones en el canal.`});
+        let activeNode = createSVG('g', {'class': 'interactive-node', 'data-tech-tip': `Fase WAKE / TX (Transmisión).<br>Intercambio de datos ultrarrápido y vuelta a dormir.`});
         activeNode.appendChild(createSVG('rect', {
-            x: 185 + (i*110), y: 140, width: 12, height: 80, fill: '#00f0ff', rx: 2,
+            x: 180 + (i*120), y: 150, width: 12, height: 70, fill: '#00f0ff', rx: 2,
             style: `opacity: 0.9; filter: drop-shadow(0 0 10px #00f0ff); animation: pulse-wave 3s infinite ${i*0.8}s; pointer-events: none;`
         }));
         
-        // Rayo de conexión desde el pico al AP
+        // Rayo de conexión al AP
         activeNode.appendChild(createSVG('path', {
-            d: `M ${190 + (i*110)} 140 Q 300 90 420 110`,
+            d: `M ${186 + (i*120)} 150 Q 250 100 410 100`,
             fill: 'none', stroke: '#ffd700', 'stroke-width': 2, 'stroke-dasharray': '5 5',
             style: `opacity:0.6; animation: dash-flow 1s linear infinite reverse; pointer-events:none;`
         }));
@@ -373,13 +405,11 @@ function buildTWT_Redesigned() {
     }
 
     // 5. BATERÍA GIGANTE INDICADORA
-    let batGroup = createSVG('g', {transform: 'translate(200, 30)', class:'interactive-node', 'data-tech-tip':'Impacto directo de TWT:<br>Extiende la vida útil de las baterías de dispositivos IoT hasta 7 veces en comparación con estándares anteriores (802.11ac/n).'});
+    let batGroup = createSVG('g', {transform: 'translate(180, 20)', class:'interactive-node', 'data-tech-tip':'Impacto directo de TWT:<br>Extiende la vida útil de las baterías IoT hasta 7 veces.'});
     batGroup.appendChild(createSVG('rect', {x:0, y:0, width:100, height:35, rx:5, fill:'rgba(15,23,42,0.8)', stroke:'#ffd700', 'stroke-width':2}));
     batGroup.appendChild(createSVG('rect', {x:102, y:10, width:6, height:15, rx:2, fill:'#ffd700'}));
-    // Batería Latiendo
     batGroup.appendChild(createSVG('rect', {x:4, y:4, width:92, height:27, rx:2, fill:'#ffd700', style:'animation: pulse-wave 4s infinite alternate;'}));
     
-    // Texto sobre batería
     let batText = createSVG('text', {x:50, y:23, fill:'#000', 'font-weight':'900', 'font-family':'JetBrains Mono', 'font-size':'14px', 'text-anchor':'middle'});
     batText.appendChild(document.createTextNode('7x BATTERY LIFE'));
     batGroup.appendChild(batText);
