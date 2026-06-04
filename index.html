@@ -7,27 +7,36 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="jarvis-hud">
+        <div class="hud-corner top-left">SYS.WIFI.80211 // ONLINE</div>
+        <div class="hud-corner top-right">ESPE_SOFTWARE_ENG</div>
+        <div class="hud-grid-overlay"></div>
+    </div>
+
     <main id="presentation-container">
         
         <section class="slide active" id="slide-portada">
             <div class="glass-panel text-center">
                 <div class="univ-header">
-                    <span class="tag">Universidad de las Fuerzas Armadas ESPE</span>
-                    <span class="tag">Ingeniería de Software</span>
+                    <span class="tag tech-pulse">Universidad de las Fuerzas Armadas ESPE</span>
+                    <span class="tag tech-pulse">Ingeniería de Software</span>
                 </div>
-                <h1 class="main-title">Redes Inalámbricas</h1>
-                <h2 class="sub-title">Evolución de los Estándares IEEE 802.11 (a/b/g/n/ac/ax)</h2>
+                
+                <div class="title-container">
+                    <h1 class="main-title">Redes Inalámbricas</h1>
+                    <h2 class="sub-title">Evolución de los Estándares IEEE 802.11 (a/b/g/n/ac/ax)</h2>
+                </div>
                 
                 <div class="team-grid">
-                    <div class="team-member">
+                    <div class="team-member interactive-element" data-tech-tip="Tema: Los Pioneros de la Conectividad">
                         <span class="role">Expositor 1</span>
                         <span class="name">Jilmar Calderón</span>
                     </div>
-                    <div class="team-member">
+                    <div class="team-member interactive-element" data-tech-tip="Tema: La Revolución del Hardware (MIMO)">
                         <span class="role">Expositor 2</span>
                         <span class="name">Gabriel Calvache</span>
                     </div>
-                    <div class="team-member">
+                    <div class="team-member interactive-element" data-tech-tip="Tema: Eficiencia Extrema (OFDMA/ax)">
                         <span class="role">Expositor 3</span>
                         <span class="name">César Galarza</span>
                     </div>
@@ -43,7 +52,7 @@
             <div class="layout-grid">
                 <div class="content-panel glass-panel">
                     <h2 class="section-title">Los Pioneros</h2>
-                    <p class="section-desc">El establecimiento de la conectividad masiva superando las limitaciones físicas del entorno.</p>
+                    <p class="section-desc">El establecimiento de la conectividad masiva superando las limitaciones físicas del entorno de radiofrecuencia libre.</p>
                     
                     <nav class="interactive-nav">
                         <button class="nav-btn active" data-target="vis-csmaca">CSMA/CA</button>
@@ -53,11 +62,11 @@
                     </nav>
 
                     <div class="stats-container">
-                        <div class="stat-item tooltip-trigger" data-tooltip="Modulación DSSS | 22 MHz Ancho de Canal">
+                        <div class="stat-item tooltip-trigger" data-tooltip="Técnica: DSSS con CCK | Espectro: 2.4 GHz | Canales no solapados: 3">
                             <span class="stat-value">11 Mbps</span>
-                            <span class="stat-label">Max. 802.11b</span>
+                            <span class="stat-label">Max. 802.11b (1999)</span>
                         </div>
-                        <div class="stat-item tooltip-trigger" data-tooltip="Modulación OFDM | 52 Subportadoras">
+                        <div class="stat-item tooltip-trigger" data-tooltip="Técnica: OFDM (52 subportadoras) | Espectro: 5 GHz">
                             <span class="stat-value">54 Mbps</span>
                             <span class="stat-label">Max. 802.11a/g</span>
                         </div>
@@ -65,29 +74,70 @@
                 </div>
 
                 <div class="visual-panel">
+                    <div class="floating-text-hud" id="hud-pioneros">
+                        <div class="hud-title">ANÁLISIS DE ESPECTRO</div>
+                        <div class="hud-subtitle" id="hud-subtitle-pioneros">Mecanismo de Detección de Portadora</div>
+                    </div>
+
                     <div class="svg-container active" id="vis-csmaca">
-                        <svg viewBox="0 0 500 300" class="tech-svg">
-                            <g class="node-ap"><circle cx="250" cy="50" r="20" fill="#fff"/></g>
-                            <g class="node-sta1"><circle cx="100" cy="250" r="15" fill="#94a3b8"/></g>
-                            <g class="node-sta2"><circle cx="400" cy="250" r="15" fill="#94a3b8"/></g>
-                            <text x="250" y="30" class="center-text" fill="#fff">Punto de Acceso</text>
-                            <text x="100" y="280" class="center-text">STA 1</text>
-                            <text x="400" y="280" class="center-text">STA 2</text>
+                        <svg viewBox="0 0 500 300" class="tech-svg 3d-perspective">
+                            <defs>
+                                <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="5" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+                                <radialGradient id="node-ap-grad" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#fff" />
+                                    <stop offset="100%" stop-color="#00f0ff" />
+                                </radialGradient>
+                            </defs>
+                            
+                            <g class="grid-base"></g>
+
+                            <g class="interactive-node" data-tech-tip="Punto de Acceso (AP): Nodo central que emite señales de confirmación (ACK) hacia las estaciones.">
+                                <circle cx="250" cy="80" r="18" fill="url(#node-ap-grad)" filter="url(#glow-cyan)"/>
+                                <text x="250" y="50" class="svg-tech-label">AP_CORE</text>
+                            </g>
+
+                            <g class="interactive-node" data-tech-tip="Estación 1: Ejecutando IFS (Inter-Frame Space). Obligatorio esperar antes de transmitir.">
+                                <circle cx="120" cy="220" r="12" fill="#94a3b8" />
+                                <text x="120" y="250" class="svg-tech-label">STA_1: WAIT</text>
+                            </g>
+
+                            <g class="interactive-node" data-tech-tip="Estación 2: Detección de portadora. Canal ocupado, calculando Ventana de Contención (CW).">
+                                <circle cx="380" cy="220" r="12" fill="#94a3b8" />
+                                <text x="380" y="250" class="svg-tech-label">STA_2: SENSING</text>
+                            </g>
+
+                            <g class="csmaca-waves"></g>
                         </svg>
                     </div>
+
                     <div class="svg-container" id="vis-80211b">
                         <svg viewBox="0 0 500 300" class="tech-svg freq-24">
-                            <text x="250" y="100" class="center-text">2.4 GHz - Alta Penetración de Obstáculos</text>
+                            <g class="wave-axes"></g>
+                            <g class="wave-interactive-points">
+                                <circle cx="125" cy="150" r="20" class="invisible-hitbox interactive-node" data-tech-tip="DSSS: Expande la señal usando secuencia pseudoaleatoria."/>
+                                <circle cx="375" cy="150" r="20" class="invisible-hitbox interactive-node" data-tech-tip="Frecuencia: 2.4 GHz | Alta penetración de muros físicos."/>
+                            </g>
                         </svg>
                     </div>
+
                     <div class="svg-container" id="vis-80211a">
                         <svg viewBox="0 0 500 300" class="tech-svg freq-5">
-                            <text x="250" y="100" class="center-text">5 GHz - Canales Limpios / Corto Alcance</text>
+                            <g class="wave-axes"></g>
+                            <g class="wave-interactive-points">
+                                <circle cx="250" cy="150" r="30" class="invisible-hitbox interactive-node" data-tech-tip="Modulación Adaptativa: Hasta 64-QAM. 52 subportadoras ortogonales."/>
+                            </g>
                         </svg>
                     </div>
+
                     <div class="svg-container" id="vis-80211g">
                         <svg viewBox="0 0 500 300" class="tech-svg freq-hybrid">
-                            <text x="250" y="100" class="center-text">Convergencia: 54 Mbps usando 2.4 GHz</text>
+                            <g class="wave-axes"></g>
+                            <g class="wave-interactive-points">
+                                <circle cx="250" cy="150" r="40" class="invisible-hitbox interactive-node" data-tech-tip="Compatibilidad Retroactiva ERP: Requiere tramas RTS/CTS que reducen eficiencia un 30%."/>
+                            </g>
                         </svg>
                     </div>
                 </div>
@@ -98,7 +148,7 @@
             <div class="layout-grid">
                 <div class="content-panel glass-panel">
                     <h2 class="section-title">La Revolución del Hardware</h2>
-                    <p class="section-desc">Aprovechando el multipercurso y la multiplexación espacial.</p>
+                    <p class="section-desc">Transformando el problema de los rebotes de señal (multipercurso) en una ventaja estratégica mediante multiplexación espacial.</p>
                     
                     <nav class="interactive-nav">
                         <button class="nav-btn active" data-target="vis-mimo">MIMO (802.11n)</button>
@@ -107,32 +157,51 @@
                     </nav>
 
                     <div class="stats-container">
-                        <div class="stat-item tooltip-trigger" data-tooltip="4x4 Antenas | Channel Bonding 40MHz">
+                        <div class="stat-item tooltip-trigger" data-tooltip="Ancho de canal de 40MHz | Guard Interval reducido (400ns)">
                             <span class="stat-value">600 Mbps</span>
-                            <span class="stat-label">Límite 802.11n</span>
+                            <span class="stat-label">Límite 802.11n (2009)</span>
                         </div>
-                        <div class="stat-item tooltip-trigger" data-tooltip="8x8 Antenas | 256-QAM | Canales 160MHz">
+                        <div class="stat-item tooltip-trigger" data-tooltip="Modulación 256-QAM | Canales de 160MHz | 8T8R Antenas">
                             <span class="stat-value">6.9 Gbps</span>
-                            <span class="stat-label">Límite 802.11ac</span>
+                            <span class="stat-label">Límite 802.11ac (2013)</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="visual-panel">
+                    <div class="floating-text-hud" id="hud-hardware">
+                        <div class="hud-title">TOPOLOGÍA FÍSICA (PHY)</div>
+                        <div class="hud-subtitle" id="hud-subtitle-hardware">Multiplexación Espacial de Flujos Independientes</div>
+                    </div>
+
                     <div class="svg-container active" id="vis-mimo">
-                        <svg viewBox="0 0 500 300" class="tech-svg">
-                            <text x="250" y="50" class="center-text">Flujos Espaciales Independientes (Multipercurso)</text>
+                        <svg viewBox="0 0 500 300" class="tech-svg 3d-perspective">
+                            <g class="interactive-node" data-tech-tip="Transmisor MIMO: Genera flujos espaciales independientes codificados con Space-Time Block Coding (STBC).">
+                                <rect x="30" y="60" width="40" height="180" fill="rgba(0,240,255,0.1)" stroke="#00f0ff" stroke-width="2"/>
+                                <text x="50" y="260" class="svg-tech-label">TX_ARRAY</text>
+                            </g>
+                            <g class="interactive-node" data-tech-tip="Receptor MIMO: Usa algoritmos de procesamiento de señal (ZF, MMSE) para separar los flujos recibidos.">
+                                <rect x="430" y="60" width="40" height="180" fill="rgba(0,240,255,0.1)" stroke="#00f0ff" stroke-width="2"/>
+                                <text x="450" y="260" class="svg-tech-label">RX_ARRAY</text>
+                            </g>
+                            <g class="mimo-paths"></g>
                         </svg>
                     </div>
+
                     <div class="svg-container" id="vis-mumimo">
                         <svg viewBox="0 0 500 300" class="tech-svg">
-                            <text x="250" y="40" class="center-text">Transmisión Simultánea a Múltiples Clientes</text>
+                            <g class="interactive-node" data-tech-tip="Punto de Acceso MU-MIMO: Atiende hasta 4 clientes distintos en la misma fracción de tiempo y frecuencia (Downlink).">
+                                <rect x="30" y="100" width="40" height="100" fill="#fff" filter="url(#glow-cyan)"/>
+                            </g>
                             <g class="mu-streams"></g>
                         </svg>
                     </div>
+
                     <div class="svg-container" id="vis-beamforming">
                         <svg viewBox="0 0 500 300" class="tech-svg">
-                            <text x="250" y="40" class="center-text">Ajuste de Fase para Concentrar la Señal</text>
+                            <g class="interactive-node" data-tech-tip="Proceso Sounding: El AP calcula una matriz de pre-codificación basada en la retroalimentación del cliente (CSI).">
+                                <circle cx="250" cy="150" r="100" class="invisible-hitbox"/>
+                            </g>
                             <g class="beam-waves"></g>
                         </svg>
                     </div>
@@ -144,7 +213,7 @@
             <div class="layout-grid">
                 <div class="content-panel glass-panel">
                     <h2 class="section-title">Eficiencia en Entornos Densos</h2>
-                    <p class="section-desc">Wi-Fi 6 (802.11ax) y 6E priorizan la capacidad total de la red sobre el enlace individual.</p>
+                    <p class="section-desc">Wi-Fi 6 prioriza la optimización del espectro, la latencia casi nula y el manejo masivo de dispositivos IoT sobre la velocidad individual.</p>
                     
                     <nav class="interactive-nav">
                         <button class="nav-btn active" data-target="vis-ofdma">OFDMA</button>
@@ -153,11 +222,11 @@
                     </nav>
 
                     <div class="stats-container">
-                        <div class="stat-item tooltip-trigger" data-tooltip="1024-QAM | Banda de 6 GHz">
+                        <div class="stat-item tooltip-trigger" data-tooltip="Modulación: 1024-QAM (10 bits/símbolo) | Wi-Fi 6E usa espectro de 6 GHz">
                             <span class="stat-value">9.6 Gbps</span>
-                            <span class="stat-label">Capacidad Teórica</span>
+                            <span class="stat-label">Capacidad Teórica (ax)</span>
                         </div>
-                        <div class="stat-item tooltip-trigger" data-tooltip="Gestión inteligente de sueño profundo">
+                        <div class="stat-item tooltip-trigger" data-tooltip="El AP y el cliente IoT programan el milisegundo exacto de despertar, ahorrando energía.">
                             <span class="stat-value">7x</span>
                             <span class="stat-label">Ahorro Batería IoT</span>
                         </div>
@@ -165,22 +234,33 @@
                 </div>
 
                 <div class="visual-panel">
+                    <div class="floating-text-hud" id="hud-eficiencia">
+                        <div class="hud-title">GESTIÓN DE RECURSOS</div>
+                        <div class="hud-subtitle" id="hud-subtitle-eficiencia">División Granular del Espectro</div>
+                    </div>
+
                     <div class="svg-container active" id="vis-ofdma">
-                        <svg viewBox="0 0 500 300" class="tech-svg">
-                            <text x="250" y="50" class="center-text">Subdivisión del Canal en Resource Units (RU)</text>
-                            <g class="ofdma-blocks"></g>
+                        <svg viewBox="0 0 500 300" class="tech-svg 3d-perspective">
+                            <g class="interactive-node" data-tech-tip="Unidades de Recursos (RU): Asignaciones de 26, 52, 106, 242, 484 o 996 subportadoras según demanda de datos.">
+                                <rect x="50" y="80" width="400" height="150" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="10 5"/>
+                                <g class="ofdma-blocks"></g>
+                            </g>
                         </svg>
                     </div>
+
                     <div class="svg-container" id="vis-bss">
                         <svg viewBox="0 0 500 300" class="tech-svg">
-                            <text x="250" y="30" class="center-text">Reutilización Espacial Agresiva (1-63 bits)</text>
-                            <g class="bss-cells"></g>
+                            <g class="interactive-node" data-tech-tip="Identificador de 6 bits (1-63). Permite a la estación ignorar tramas de redes adyacentes si el RSSI es bajo.">
+                                <g class="bss-cells"></g>
+                            </g>
                         </svg>
                     </div>
+
                     <div class="svg-container" id="vis-twt">
                         <svg viewBox="0 0 500 300" class="tech-svg">
-                            <text x="250" y="30" class="center-text">Sincronización de Periodos de Actividad (IoT)</text>
-                            <g class="timeline-battery"></g>
+                            <g class="interactive-node" data-tech-tip="Negociación TWT: Mantiene la radio apagada y solo activa el enlace en el intervalo acordado (Trigger Frame).">
+                                <g class="timeline-battery"></g>
+                            </g>
                         </svg>
                     </div>
                 </div>
@@ -189,7 +269,7 @@
 
         <section class="slide" id="slide-tabla">
             <div class="glass-panel table-panel">
-                <h2 class="section-title text-center" style="border: none; padding: 0;">Cuadro Comparativo IEEE 802.11</h2>
+                <h2 class="section-title text-center" style="border: none; padding: 0; margin-bottom: 2rem;">Cuadro Comparativo Avanzado IEEE 802.11</h2>
                 
                 <div class="table-wrapper">
                     <table class="tech-table">
@@ -197,60 +277,60 @@
                             <tr>
                                 <th>Estándar</th>
                                 <th>Año</th>
-                                <th>Banda</th>
-                                <th>Modulación</th>
-                                <th>Velocidad Máx.</th>
-                                <th>Mejora Principal <span class="arrow-up">⇡</span></th>
+                                <th>Espectro</th>
+                                <th>Topología Modulación</th>
+                                <th>Límite Físico</th>
+                                <th>Hito Arquitectónico <span class="arrow-up">⇡</span></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr class="interactive-row" data-tech-tip="802.11a: Introdujo OFDM, el cimiento para todas las tecnologías futuras, pero su costo y alcance frenaron su adopción masiva.">
                                 <td class="highlight">802.11a</td>
                                 <td>1999</td>
                                 <td>5 GHz</td>
-                                <td>OFDM</td>
+                                <td>OFDM (52 subportadoras)</td>
                                 <td class="data-speed">54 Mbps</td>
-                                <td><span class="trend">Fundamento OFDM</span></td>
+                                <td><span class="trend">Resistencia Multipath</span></td>
                             </tr>
-                            <tr>
+                            <tr class="interactive-row" data-tech-tip="802.11b: Baja velocidad pero excelente penetración de muros. Su seguridad original, WEP, hoy es vulnerable en minutos.">
                                 <td class="highlight">802.11b</td>
                                 <td>1999</td>
                                 <td>2.4 GHz</td>
-                                <td>DSSS</td>
+                                <td>DSSS (CCK)</td>
                                 <td class="data-speed">11 Mbps</td>
-                                <td><span class="trend">Adopción Masiva</span></td>
+                                <td><span class="trend">Alcance y Adopción</span></td>
                             </tr>
-                            <tr>
+                            <tr class="interactive-row" data-tech-tip="802.11g: Requirió tramas CTS-to-self para no romper las redes de los dispositivos 802.11b antiguos.">
                                 <td class="highlight">802.11g</td>
                                 <td>2003</td>
                                 <td>2.4 GHz</td>
                                 <td>OFDM / DSSS</td>
                                 <td class="data-speed">54 Mbps</td>
-                                <td><span class="trend">Velocidad + Alcance</span></td>
+                                <td><span class="trend">Convergencia a/b</span></td>
                             </tr>
-                            <tr>
+                            <tr class="interactive-row" data-tech-tip="802.11n (Wi-Fi 4): Primera vez que se unieron canales de 20MHz para formar canales de 40MHz (Channel Bonding).">
                                 <td class="highlight">802.11n (Wi-Fi 4)</td>
                                 <td>2009</td>
                                 <td>2.4 / 5 GHz</td>
-                                <td>OFDM + MIMO</td>
+                                <td>OFDM + MIMO (Hasta 4x4)</td>
                                 <td class="data-speed">600 Mbps</td>
                                 <td><span class="trend advance">Multiplexación Espacial</span></td>
                             </tr>
-                            <tr>
+                            <tr class="interactive-row" data-tech-tip="802.11ac (Wi-Fi 5): Estandarizó el Beamforming explícito. Cifrado principal operando sobre la robustez de WPA2 AES-CCMP.">
                                 <td class="highlight">802.11ac (Wi-Fi 5)</td>
                                 <td>2013</td>
-                                <td>5 GHz</td>
-                                <td>OFDM + MU-MIMO</td>
+                                <td>Exclusivo 5 GHz</td>
+                                <td>256-QAM + MU-MIMO (DL)</td>
                                 <td class="data-speed">6.9 Gbps</td>
-                                <td><span class="trend advance">Multiusuario simultáneo (DL)</span></td>
+                                <td><span class="trend advance">Transmisión Multiusuario</span></td>
                             </tr>
-                            <tr class="row-ax">
+                            <tr class="row-ax interactive-row" data-tech-tip="802.11ax (Wi-Fi 6/6E): Emplea WPA3 de forma nativa con intercambio de claves SAE. Abre espectro virgen de 6 GHz.">
                                 <td class="highlight">802.11ax (Wi-Fi 6/6E)</td>
                                 <td>2021</td>
                                 <td>2.4 / 5 / 6 GHz</td>
-                                <td>OFDMA + MU-MIMO</td>
+                                <td>1024-QAM + OFDMA</td>
                                 <td class="data-speed glow">9.6 Gbps</td>
-                                <td><span class="trend advance-max">Máxima Eficiencia Densa</span></td>
+                                <td><span class="trend advance-max">Eficiencia Extrema IoT</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -269,6 +349,8 @@
             </div>
             <button id="btn-next" class="ctrl-btn">Siguiente ❯</button>
         </div>
+
+        <div id="global-tech-tooltip"></div>
 
     </main>
 
