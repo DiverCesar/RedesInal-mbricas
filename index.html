@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- HUD Perimetral Profesional -->
     <div id="jarvis-hud">
         <div class="hud-corner top-left">IEEE 802.11 ARCHITECTURE VISUALIZER</div>
         <div class="hud-corner top-right">ESPE // INGENIERÍA DE SOFTWARE</div>
@@ -15,6 +16,9 @@
 
     <main id="presentation-container">
         
+        <!-- ==========================================
+             PORTADA
+             ========================================== -->
         <section class="slide active" id="slide-portada">
             <div class="glass-panel text-center">
                 <div class="univ-header">
@@ -48,6 +52,9 @@
             </div>
         </section>
 
+        <!-- ==========================================
+             PARTE 1: JILMAR (LOS PIONEROS)
+             ========================================== -->
         <section class="slide" id="slide-pioneros">
             <div class="layout-grid">
                 <div class="content-panel glass-panel">
@@ -61,12 +68,13 @@
                         <button class="nav-btn" data-target="vis-80211g">802.11g</button>
                     </nav>
 
+                    <!-- HOVERS ESTADÍSTICOS TÉCNICOS APLICADOS AQUÍ -->
                     <div class="stats-container">
-                        <div class="stat-item tooltip-trigger" data-tooltip="Técnica: DSSS con CCK | Espectro: 2.4 GHz | Canales no solapados: 3">
+                        <div class="stat-item interactive-node" data-tech-tip="ESTADÍSTICAS 802.11b:<br>Velocidad Teórica: 11 Mbps.<br>Modulación: DSSS con CCK.<br>Banda: 2.4 GHz (Gran alcance, alta penetración).<br>Canales no solapados: 3.">
                             <span class="stat-value">11 Mbps</span>
                             <span class="stat-label">Max. 802.11b (1999)</span>
                         </div>
-                        <div class="stat-item tooltip-trigger" data-tooltip="Técnica: OFDM (52 subportadoras) | Espectro: 5 GHz">
+                        <div class="stat-item interactive-node" data-tech-tip="ESTADÍSTICAS 802.11a/g:<br>Velocidad Teórica: 54 Mbps.<br>Modulación: OFDM con 52 subportadoras ortogonales.<br>Bandas: 5 GHz (802.11a) y 2.4 GHz (802.11g).<br>Robustez superior frente a interferencias.">
                             <span class="stat-value">54 Mbps</span>
                             <span class="stat-label">Max. 802.11a/g</span>
                         </div>
@@ -76,7 +84,7 @@
                 <div class="visual-panel">
                     <div class="floating-text-hud" id="hud-pioneros">
                         <div class="hud-title">ANÁLISIS DE ESPECTRO</div>
-                        <div class="hud-subtitle" id="hud-subtitle-pioneros">Capa de Control de Acceso al Medio</div>
+                        <div class="hud-subtitle" id="hud-subtitle-pioneros">CSMA/CA</div>
                     </div>
 
                     <div class="svg-container active" id="vis-csmaca">
@@ -150,6 +158,9 @@
             </div>
         </section>
 
+        <!-- ==========================================
+             PARTE 2: GABRIEL (LA REVOLUCIÓN DEL HARDWARE)
+             ========================================== -->
         <section class="slide" id="slide-hardware">
             <div class="layout-grid">
                 <div class="content-panel glass-panel">
@@ -162,12 +173,13 @@
                         <button class="nav-btn" data-target="vis-beamforming">Beamforming</button>
                     </nav>
 
+                    <!-- HOVERS ESTADÍSTICOS TÉCNICOS APLICADOS AQUÍ -->
                     <div class="stats-container">
-                        <div class="stat-item tooltip-trigger" data-tooltip="Modulación OFDM | 4x4 Antenas | Channel Bonding a 40MHz">
+                        <div class="stat-item interactive-node" data-tech-tip="ESPECIFICACIONES 802.11n (Wi-Fi 4):<br>Velocidad Teórica: 600 Mbps.<br>Tecnología Clave: MIMO (Multiple Input, Multiple Output).<br>Canales: Channel Bonding agregando dos canales de 20MHz en uno de 40MHz.<br>Bandas: Dual Band (2.4 GHz y 5 GHz).">
                             <span class="stat-value">600 Mbps</span>
                             <span class="stat-label">Límite 802.11n (2009)</span>
                         </div>
-                        <div class="stat-item tooltip-trigger" data-tooltip="Exclusivo 5GHz | Modulación 256-QAM | Canales de hasta 160MHz">
+                        <div class="stat-item interactive-node" data-tech-tip="ESPECIFICACIONES 802.11ac (Wi-Fi 5):<br>Velocidad Teórica: 6.9 Gbps.<br>Tecnología Clave: MU-MIMO (Múltiples usuarios simultáneos en Downlink).<br>Espectro: Exclusivo 5 GHz con canales de hasta 160 MHz.<br>Modulación: 256-QAM (8 bits/símbolo).">
                             <span class="stat-value">6.9 Gbps</span>
                             <span class="stat-label">Límite 802.11ac (2013)</span>
                         </div>
@@ -177,7 +189,7 @@
                 <div class="visual-panel">
                     <div class="floating-text-hud" id="hud-hardware">
                         <div class="hud-title">TOPOLOGÍA FÍSICA (PHY)</div>
-                        <div class="hud-subtitle" id="hud-subtitle-hardware">Multiplexación Espacial</div>
+                        <div class="hud-subtitle" id="hud-subtitle-hardware">MIMO (802.11N)</div>
                     </div>
 
                     <div class="svg-container active" id="vis-mimo">
@@ -199,7 +211,6 @@
                                 <line x1="435" y1="200" x2="450" y2="200" stroke="#00f0ff" stroke-width="2"/>
                                 <text x="465" y="240" class="svg-tech-label">RX</text>
                             </g>
-
                             <g class="mimo-paths"></g>
                         </svg>
                     </div>
@@ -229,6 +240,9 @@
             </div>
         </section>
 
+        <!-- ==========================================
+             PARTE 3: CÉSAR (LA ERA DE LA EFICIENCIA)
+             ========================================== -->
         <section class="slide" id="slide-eficiencia">
             <div class="layout-grid">
                 <div class="content-panel glass-panel">
@@ -241,12 +255,13 @@
                         <button class="nav-btn" data-target="vis-twt">Target Wake Time</button>
                     </nav>
 
+                    <!-- HOVERS ESTADÍSTICOS TÉCNICOS APLICADOS AQUÍ -->
                     <div class="stats-container">
-                        <div class="stat-item tooltip-trigger" data-tooltip="1024-QAM (10 bits/símbolo) | Wi-Fi 6E emplea el espectro virgen de 6 GHz">
+                        <div class="stat-item interactive-node" data-tech-tip="ESPECIFICACIONES 802.11ax (Wi-Fi 6/6E):<br>Velocidad Teórica: 9.6 Gbps.<br>Modulación Extrema: 1024-QAM (10 bits codificados por símbolo).<br>Eficiencia: OFDMA permite dividir el canal en Unidades de Recursos.<br>Wi-Fi 6E: Extiende la operación al espectro limpio de 6 GHz.">
                             <span class="stat-value">9.6 Gbps</span>
                             <span class="stat-label">Capacidad Teórica (ax)</span>
                         </div>
-                        <div class="stat-item tooltip-trigger" data-tooltip="El AP y el cliente negocian sesiones. El radio se apaga el resto del tiempo.">
+                        <div class="stat-item interactive-node" data-tech-tip="TARGET WAKE TIME (TWT):<br>Mecanismo revolucionario de ahorro de energía.<br>El AP y los clientes IoT negocian sesiones de comunicación programadas.<br>El cliente despierta solo en el milisegundo exacto, ahorrando hasta 7x más batería que en 802.11ac.">
                             <span class="stat-value">7x</span>
                             <span class="stat-label">Ahorro Batería IoT</span>
                         </div>
@@ -256,7 +271,7 @@
                 <div class="visual-panel">
                     <div class="floating-text-hud" id="hud-eficiencia">
                         <div class="hud-title">GESTIÓN DE RECURSOS</div>
-                        <div class="hud-subtitle" id="hud-subtitle-eficiencia">Asignación Granular (RU)</div>
+                        <div class="hud-subtitle" id="hud-subtitle-eficiencia">OFDMA</div>
                     </div>
 
                     <div class="svg-container active" id="vis-ofdma">
@@ -283,6 +298,9 @@
             </div>
         </section>
 
+        <!-- ==========================================
+             TABLA COMPARATIVA FINAL 
+             ========================================== -->
         <section class="slide" id="slide-tabla">
             <div class="glass-panel table-panel">
                 <h2 class="section-title text-center" style="border: none; padding: 0; margin-bottom: 2rem;">Cuadro Comparativo Avanzado IEEE 802.11</h2>
@@ -354,6 +372,7 @@
             </div>
         </section>
 
+        <!-- Controles de Navegación -->
         <div class="presentation-controls">
             <button id="btn-prev" class="ctrl-btn">❮ Anterior</button>
             <div class="slide-indicators">
